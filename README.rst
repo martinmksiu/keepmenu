@@ -44,6 +44,8 @@ Requirements
    configuration/theming should be done via Xresources.
 4. (optional) Pinentry. Make sure to set which flavor of pinentry command to use
    in the config file.
+5. (optional) xdotool. If you have a lot of Unicode characters or use a non-U.S.
+   English keyboard layout, xdotool is necessary to handle typing those alphabets.
 
 Installation
 ------------
@@ -69,6 +71,8 @@ Installation
   + Add your database(s) and keyfile(s)
   + Adjust `pw_cache_period_hrs` if desired. Default is 6 hours.
   + Set the dmenu_command to `rofi` if you are using that instead
+  + Set `type_library = xdotool` if you need support for non-U.S. English
+    keyboard layouts and/or characters.
 
 - If using Rofi, you can try some of the command line options in config.ini or
   set them using the `dmenu_command` setting, but I haven't tested most of them
