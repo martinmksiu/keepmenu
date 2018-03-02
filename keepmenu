@@ -15,7 +15,7 @@ import shlex
 import socket
 import string
 import sys
-from subprocess import call, Popen, PIPE
+from subprocess import call, Popen, PIPE, STDOUT
 import tempfile
 from threading import Timer
 import time
@@ -137,6 +137,11 @@ def process_config():
         DMENU_LEN = int(CONF.get("dmenu", "l"))
     else:
         DMENU_LEN = 24
+    try:
+        Popen(['xdotool'], stdout=PIPE, stderr=STDOUT)
+    except OSError:
+        dmenu_err("Xdotool not found. Please install or remove from config.ini")
+        sys.exit()
 
 
 def get_auth():
@@ -380,6 +385,12 @@ def type_entry_xdotool(entry):
     """Type entry username/password using xdotool
 
     """
+    if CONF.has_option("database", "keyboard_layout"):
+        if Popen(['setxkbmap', CONF.get("database", "keyboard_layout")],
+                 stdout=PIPE,
+                 stderr=STDOUT).communicate()[0]:
+            dmenu_err("Invalid keyboard layout. Fix config.ini and restart keepmenu.")
+            return
     if entry.username:
         call(['xdotool', 'type', entry.username])
         if entry.password:
@@ -397,6 +408,12 @@ def type_text(data):
     if CONF.has_option('database', 'type_library'):
         library = CONF.get('database', 'type_library')
     if library == 'xdotool':
+        if CONF.has_option("database", "keyboard_layout"):
+            if Popen(['setxkbmap', CONF.get("database", "keyboard_layout")],
+                     stdout=PIPE,
+                     stderr=STDOUT).communicate()[0]:
+                dmenu_err("Invalid keyboard layout. Fix config.ini and restart keepmenu.")
+                return
         call(['xdotool', 'type', data])
     else:
         kbd = PyKeyboard()

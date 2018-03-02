@@ -35,3 +35,4 @@
 # terminal = <xterm, urxvt> <options if necessary>. 'xterm' by default
 # gui_editor = <path/to/editor> <options>  e.g. gui_editor = gvim -f
 # type_library = pyuserinput (default) or xdotool (for alternate keyboard layout support)
+# keyboard_layout = us (default) <country code from /usr/share/X11/xkb/rules/base.lst>
