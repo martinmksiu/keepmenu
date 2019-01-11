@@ -1018,7 +1018,7 @@ def view_notes(notes):
     notes_l = notes.split('\n')
     notes_b = "\n".join(notes_l).encode(ENC)
     sel = dmenu_select(min(DMENU_LEN, len(notes_l)), inp=notes_b)
-    return sel
+    return sel.split(': ')[-1]
 
 
 def client():
